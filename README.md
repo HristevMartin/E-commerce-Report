@@ -1,7 +1,3 @@
-
-Project Title
-Brief description of the project.
-
 ### Running locally
 
 #### Pre requisites
