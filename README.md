@@ -9,6 +9,7 @@ Brief description of the project.
     1. Install Python  version `3` and above
     2. Install MYSQL Workbench/Docker image for mysql
     3. Locate the Dump files in one location
+    4. Install the package requirements - go in the root directory of the project and run pip install -r requirements.txt
 
 2. Add environment variables
     1. It can be added as a shell script or via the interpreter
