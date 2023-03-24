@@ -1,3 +1,10 @@
+import os
+
+db_name = os.getenv('DB_NAME')
+
+if not db_name:
+    raise ValueError('DB_NAME is missing')
+
 QUERY_GET_TOTAL_NUMBER_OF_ITEMS_SOLD_PER_DAY = """
     SELECT SUM(quantity) as items_sold
     FROM OrderLine
@@ -5,44 +12,44 @@ QUERY_GET_TOTAL_NUMBER_OF_ITEMS_SOLD_PER_DAY = """
     WHERE DATE(`Order`.created_at) = :date;
 """
 
-QUERY_GET_TOTAL_ORDERS_PER_CUSOTOMER_DAILY = """
+QUERY_GET_TOTAL_ORDERS_PER_CUSOTOMER_DAILY = f"""
     SELECT COUNT(DISTINCT customer_id)
-    as total_customers FROM my_test.Order
+    as total_customers FROM {db_name}.Order
     WHERE DATE(created_at) = :date;
 """
 
-QUERY_GET_TOTAL_DISCOUNT_GIVEN_PER_DAY = """
+QUERY_GET_TOTAL_DISCOUNT_GIVEN_PER_DAY = f"""
     SELECT SUM(discounted_amount) AS total_discount_amount
     FROM OrderLine
-    JOIN my_test.Order ON my_test.Order.id = OrderLine.order_id
+    JOIN {db_name}.Order ON {db_name}.Order.id = OrderLine.order_id
     WHERE DATE(created_at) = :date;
 
 """
 
-QUERY_GET_AVERAGE_DISCOUNTRATE_ON_ITEM_SOLD_PER_DAY = """
+QUERY_GET_AVERAGE_DISCOUNTRATE_ON_ITEM_SOLD_PER_DAY = f"""
     SELECT AVG(ol.discount_rate) as avg_discount_rate
-    FROM my_test.Order o
+    FROM {db_name}.Order o
     JOIN OrderLine ol ON o.id = ol.order_id
     WHERE DATE(o.created_at) = :date
 
 """
 
-QUERY_AVERAGE_ORDER_TOTAL_PER_DAY = """
+QUERY_AVERAGE_ORDER_TOTAL_PER_DAY = f"""
  SELECT AVG(total_amount) as avg_order_total
     FROM (
   SELECT o.id, SUM(ol.discounted_amount + ol.vat_amount) as total_amount
-  FROM my_test.Order o
+  FROM {db_name}.Order o
   JOIN OrderLine ol ON o.id = ol.order_id
   WHERE DATE(o.created_at) = :date
   GROUP BY o.id
 ) as order_totals
 """
 
-QUERY_GET_TOTAL_AMOUNT_OF_COMMISSIONS_GENERATED_PER_DAY = """
+QUERY_GET_TOTAL_AMOUNT_OF_COMMISSIONS_GENERATED_PER_DAY = f"""
 SELECT SUM(vc.rate * order_totals.total_amount) as total_commissions
 FROM (
   SELECT o.vendor_id, SUM(ol.discounted_amount + ol.vat_amount) as total_amount
-  FROM my_test.Order o
+  FROM {db_name}.Order o
   JOIN OrderLine ol ON o.id = ol.order_id
   WHERE DATE(o.created_at)= :date
   GROUP BY o.id, o.vendor_id
@@ -51,12 +58,12 @@ JOIN VendorCommissions vc ON DATE(vc.date) = '2019-08-03' AND order_totals.vendo
 
 """
 
-QUERY_GET_TOTAL_AMOUNT_OF_COMMISSION_PER_PROMOTION_PER_DAY = """
+QUERY_GET_TOTAL_AMOUNT_OF_COMMISSION_PER_PROMOTION_PER_DAY = f"""
     SELECT pp.promotion_id, SUM(vc.rate * ol.discounted_amount) as total_commissions
     FROM OrderLine ol
     JOIN (
       SELECT id, vendor_id, customer_id
-      FROM my_test.Order
+      FROM {db_name}.Order
       WHERE DATE(created_at) = :date
     ) as o ON ol.order_id = o.id
     JOIN (
