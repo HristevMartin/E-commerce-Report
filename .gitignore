@@ -1,0 +1,42 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+*.egg
+*.egg-info
+dist/
+build/
+*.pyc
+
+# Distribute #
+##############
+bin/
+include/
+lib/
+share/
+
+# Local #
+#########
+*.local
+*.swp
+*.env
+
+# IDE #
+#######
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Logs #
+########
+*.log
+logs/
+log/
