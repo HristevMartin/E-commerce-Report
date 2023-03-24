@@ -17,7 +17,7 @@ def test_get_daily_report():
     assert report['commissions']['order_average']
 
 
-def test_get_daily_report(monkeypatch):
+def test_get_daily_report_mock(monkeypatch):
     # Mock the database methods called by the function
     total_number_of_items_sold_per_day = MagicMock(return_value=[(10,)])
     total_number_of_customers_per_day = MagicMock(return_value=[(5,)])

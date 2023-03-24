@@ -1,3 +1,4 @@
+
 Project Title
 Brief description of the project.
 
@@ -29,6 +30,6 @@ IMPORTANT NOTE: In order to create the tables and ingest the data we need to add
 
 Run all tests: `pytest`
 
-Run a specific test file: `pytest dtwin-api/tests/unit/filename.py`
+Run a specific test file: `pytest tests/filename.py`
 
-Run a specific test case: `pytest dtwin-api/tests/unit/filename.py::function_name`
+Run a specific test case: `pytest tests/filename.py::function_name`
