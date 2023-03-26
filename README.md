@@ -10,11 +10,11 @@
 
 2. Add environment variables
     1. It can be added as a shell script or via the interpreter
-        1. IE_DB_HOST=localhost;
+        1. DB_HOST=localhost;
         2. DB_PORT=3306;
-        3. IE_DB_USERNAME=root;
-        4. IE_DB_PASSWORD=pass;
-        5. IE_DB_NAME=simulation_cache_ie;
+        3. DB_USERNAME=root;
+        4. DB_PASSWORD=pass;
+        5. DB_NAME=simulation_cache_ie;
         6. DEPLOYMENT_PROJECT=local;
 
 IMPORTANT NOTE: In order to create the tables and ingest the data we need to add environment variable.
